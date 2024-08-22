@@ -32,6 +32,7 @@ class BaseUser(AbstractUser):
             verbose_name=_("image"),
             quality=90,
             upload_to="user/%Y/%m",
+            blank=True,
             null=True,
             )
     role = models.CharField(

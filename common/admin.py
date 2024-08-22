@@ -34,7 +34,6 @@ class UserAdmin(admin.ModelAdmin):
                     "role",
                     "full_name",
                     "username",
-                    "balance",
                     "image",
                 )
             },

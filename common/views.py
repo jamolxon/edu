@@ -7,10 +7,20 @@ from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views import View
 
+from common.models import Student
+
 
 class HomeView(View):
     def get(self, request):
-        return render(request, "index.html")
+        context = {}
+
+        if request.user.role == "student" and hasattr(request.user, "students"):
+            student = Student.objects.get(user_id=request.user.id)
+            context["student"] = student
+        else:
+            context["student"] = None
+
+        return render(request, "index.html", context)
 
 
 class LoginView(View):

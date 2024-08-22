@@ -30,6 +30,8 @@ License: You must have a valid license purchased only from themeforest(the above
     <!--end::Fonts-->
     <!--begin::Page Vendors Styles(used by this page)-->
     <!-- Font Awesome -->
+
+        <link href="{% static 'assets/plugins/custom/fullcalendar/fullcalendar.bundle.css' %}" rel="stylesheet" type="text/css" />
     <link href="{% static 'assets/plugins/custom/fullcalendar/fullcalendar.bundle.css' %}" rel="stylesheet"
           type="text/css"/>
     <link href="{% static 'assets/plugins/custom/datatables/datatables.bundle.css' %}" rel="stylesheet"
@@ -136,12 +138,18 @@ License: You must have a valid license purchased only from themeforest(the above
 <script src="{% static 'assets/js/pages/crud/forms/widgets/select2.js' %}"></script>
 <script src="{% static 'assets/js/pages/crud/forms/widgets/bootstrap-select.js' %}"></script>
 <script src="{% static 'assets/js/pages/crud/forms/widgets/form-repeater.js' %}"></script>
-<!--end::Page Scripts-->
-<script src="{% static 'scripts.js' %}"></script>
+
+        <!--begin::Page Vendors(used by this page)-->
+        <script src="{% static 'assets/plugins/custom/fullcalendar/fullcalendar.bundle.js' %}"></script>
+        <!--end::Page Vendors-->
+        <!--begin::Page Scripts(used by this page)-->
+        <script src="{% static 'assets/js/pages/features/calendar/basic.js' %}"></script>
+        <!--end::Page Scripts-->
+        <script src="{% static 'scripts.js' %}"></script>
 
 
-{% block script %}
-{% endblock %}
-</body>
-<!--end::Body-->
+        {% block script %}
+        {% endblock %}
+    </body>
+    <!--end::Body-->
 </html>
