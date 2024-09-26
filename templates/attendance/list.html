@@ -1,6 +1,17 @@
 {% extends 'base.html' %}
+{% block content %}
 
-    {% block content %}
+<!--begin::Main-->
+{% include 'parts/mobile_header.html' %}
+<div class="d-flex flex-column flex-root">
+    <!--begin::Page-->
+    <div class="d-flex flex-row flex-column-fluid page">
+        {% include 'parts/aside.html' with menu_parent="mentor" menu_submenu="mentor-list" %}
+        <!--begin::Wrapper-->
+        <div class="d-flex flex-column flex-row-fluid wrapper" id="kt_wrapper">
+            {% include 'parts/header.html' %}
+            <!--begin::Content-->
+            <div class="content d-flex flex-column flex-column-fluid" id="kt_content">
         <div class="card mb-3">
             <div class="card-header">
               <i class="fas fa-table"></i>
@@ -29,6 +40,20 @@
               </div>
             </div>
           </div>
+
+</div>
+            <!--end::Content-->
+            {% include 'parts/footer.html' %}
+        </div>
+        <!--end::Wrapper-->
+    </div>
+    <!--end::Page-->
+</div>
+<!--end::Main-->
+{% include 'parts/user_panel.html' %}
+
+{% include 'parts/scroll_top.html' %}
+
 
 
     {% endblock %}
