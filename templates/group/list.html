@@ -79,7 +79,7 @@
                                     <tbody>
                                         {% for object in page_obj %}
                                         <tr>
-                                            <th scope="row"> <a href="{% url 'group:group-update' object.pk %}">{{object.name|default_if_none:"-"|truncatewords:5}}</a> </th>
+                                            <th scope="row"> <a href="{% url 'group:group-student-list' object.pk %}">{{object.name|default_if_none:"-"|truncatewords:5}}</a> </th>
                                             
                                             <td nowrap="nowrap">
 

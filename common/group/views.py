@@ -3,7 +3,7 @@ from django.views.generic import ListView
 from django.contrib.auth.mixins import PermissionRequiredMixin
 
 from helpers.views import CreateView, DeleteView, UpdateView
-from common.models import Group
+from common.models import Group, Student
 from common.group.forms import GroupForm
 
 
@@ -12,7 +12,7 @@ class GroupListView(ListView):
     model = Group
     template_name = "group/list.html"
     context_object_name = "objects"
-    queryset = model.objects.all().order_by("-id")
+    queryset = model.objects.all().order_by("-id").filter()
     paginate_by = 10
 
 
@@ -24,6 +24,21 @@ class GroupListView(ListView):
                     Q(name__icontains=search))
 
         return object_list
+    
+
+class GroupStudentListView(ListView):
+    model = Group
+    template_name = "group/detail.html"
+    context_object_name = "objects"
+    queryset = model.objects.all().order_by("-id")
+    paginate_by = 10
+
+
+    def get_context_data(self,**kwargs):
+        context = super().get_context_data(**kwargs)
+        context['students'] =  Student.objects.filter(group_id=self.kwargs["group_id"])
+        print(context["students"])
+        return context
 
 
 class GroupCreateView(CreateView):
