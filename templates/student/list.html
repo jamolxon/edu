@@ -106,7 +106,7 @@
                             <a href="#" class=""></a>
                             <!--end::Button-->
                             <!--begin::Button-->
-                            <a href="custom/apps/user/add-user.html" class="btn btn-light-primary font-weight-bold ml-2">Yangi qo'shish</a>
+                            <a href="{% url 'student:student-create' %}" class="btn btn-light-primary font-weight-bold ml-2">Yangi qo'shish</a>
                             <!--end::Button-->
                         </div>
                         <!--end::Toolbar-->
@@ -193,10 +193,10 @@
                                             <!--begin::User-->
                                             <!--begin::Actions-->
                                             <div class="my-lg-0 my-1">
-                                                <a href="#" class="btn btn-sm btn-light-primary font-weight-bolder text-uppercase mr-2">
+                                                <a href="{% url 'student:student-update' object.id %}" class="btn btn-sm btn-light-primary font-weight-bolder text-uppercase mr-2">
                                                     <i class="la la-edit"></i>
                                                 </a>
-                                                <a href="#" data-toggle="modal" data-target="#deleteModal" class="btn btn-sm btn-primary font-weight-bolder text-uppercase">
+                                                <a href="{% url 'student:student-delete' object.id %}" data-toggle="modal" data-target="#deleteModal" class="btn btn-sm btn-primary removeButton font-weight-bolder text-uppercase">
                                                     <i class="la la-trash"></i>
                                                 </a>
 
@@ -216,7 +216,7 @@
                                                                     class="btn btn-outline-secondary mb-3 mr-3"
                                                                     data-dismiss="modal">Ortga qaytish
                                                                 </button>
-                                                                <a href="" id="modalDeleteButton">
+                                                                <a href="{% url 'student:student-delete' object.id %}" id="modalDeleteButton">
                                                                     <button type="button" class="btn btn-danger mb-3">
                                                                         O'chirish
                                                                     </button>
@@ -430,4 +430,4 @@
 
 {% block script %}
 <script src="{% static 'scripts.js' %}"></script>
-    {% endblock %}
+{% endblock %}

@@ -23,6 +23,16 @@ class HomeView(View):
         return render(request, "index.html", context)
 
 
+class AttendanceView(View):
+    def get(self, request):
+        return render(request, "attendance/list.html")
+
+class AttendanceListView(View):
+    def get(self, request):
+        return render(request, "attendance/att.html")
+
+
+
 class LoginView(View):
     def get(self, request):
 
