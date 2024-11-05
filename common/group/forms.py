@@ -35,7 +35,7 @@ class GroupForm(forms.ModelForm):
                     attrs={"class": "form-control", "id": "kt_datetimepicker_3", "data-target": "#kt_datetimepicker_3", "placeholder": "Sanani tanlash" }
                     ),
                  "end_date": DateWidget(
-                    attrs={"class": "form-control", "id": "kt_datetimepicker_3", "data-target": "#kt_datetimepicker_3", "placeholder": "Sanani tanlash" }
+                    attrs={"class": "form-control", "id": "kt_datetimepicker_2", "data-target": "#kt_datetimepicker_3", "placeholder": "Sanani tanlash" }
                     ),
                 "duration": forms.TextInput(
                     attrs={"class": "form-control", }

@@ -2,15 +2,16 @@ from django.db import models
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 
-from common.models import BaseUser
+from django_resized import ResizedImageField
 
+from common.models import BaseUser
 
 
 class Product(models.Model):
     name = models.CharField(max_length=255)
     description = models.TextField()
     price = models.IntegerField(_("price"), default=100)
-    photo = models.ImageField(_("photo"), upload_to="product/%Y/%m")
+    photo = ResizedImageField(_("photo"), size=[350, 250], quality=100, crop=["middle", "center"], upload_to="product/%Y/%m")
     is_special = models.BooleanField(_("product is special"), default=False)
     is_accessory = models.BooleanField(_("product is accessory"), default=False)
     is_cloth = models.BooleanField(_("product is a cloth"), default=False)

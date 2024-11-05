@@ -1,0 +1,100 @@
+
+/* styles.css */
+body {
+    background-color: #f9f9f9;
+    font-family: Arial, sans-serif;
+}
+
+h2 {
+    color: #333;
+}
+
+.table {
+    background-color: #fff;
+}
+
+.attendance-btn {
+    position: relative;
+    background-color: #ddd;
+    border: none;
+    padding: 10px;
+    width: 100%;
+    border-radius: 4px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    transition: background-color 0.3s;
+}
+
+.attendance-btn:hover {
+    background-color: #007bff;
+    color: white;
+}
+
+.attendance-btn .icon {
+    margin-right: 5px;
+}
+
+.attendance-btn .options {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: white;
+    border: 1px solid #ccc;
+    z-index: 100;
+    width: 100%;
+}
+
+.attendance-btn:hover .options {
+    display: block;
+}
+
+.attendance-btn .options button {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    background-color: white;
+    cursor: pointer;
+}
+
+.attendance-btn .options button:hover {
+    background-color: #007bff;
+    color: white;
+}
+
+/* Adjustments for year dropdown and month tabs */
+.row {
+    display: flex; /* Ensure the row uses flex display */
+    align-items: center; /* Center the items vertically */
+}
+
+#year {
+    width: auto; /* Set width to auto to take only needed space */
+    min-width: 120px; /* Set a minimum width for better visibility */
+    margin-right: 10px; /* Space between year dropdown and month tabs */
+}
+
+/* Make the month tabs horizontal */
+.nav-pills {
+    display: flex;
+    flex-wrap: nowrap; /* Prevent wrapping to next line */
+    justify-content: flex-start; /* Align month tabs to the left */
+    gap: 10px; /* Space between month tabs */
+}
+
+.nav-pills .nav-link {
+    padding: 8px 16px;
+    border-radius: 4px;
+    background-color: #f1f1f1;
+    color: #333;
+    text-align: center;
+}
+
+.nav-pills .nav-link.active {
+    background-color: #007bff;
+    color: white;
+}
+

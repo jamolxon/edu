@@ -44,6 +44,8 @@ INSTALLED_APPS = [
     'common',
     'product',
 
+    'rest_framework',
+    'drf_yasg',
     'django_resized',
 ]
 
@@ -79,6 +81,15 @@ WSGI_APPLICATION = 'educoin.wsgi.application'
 
 
 AUTH_USER_MODEL = "common.BaseUser"
+
+
+REST_FRAMEWORK = {
+    # Use Django's standard `django.contrib.auth` permissions,
+    # or allow read-only access for unauthenticated users.
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
+    ]
+}
 
 
 # Password validation

@@ -15,22 +15,15 @@ class HomeView(View):
         context = {}
 
         if request.user.role == "student" and hasattr(request.user, "students"):
-            student = Student.objects.get(user_id=request.user.id)
-            context["student"] = student
+            try:
+                student = Student.objects.get(user_id=request.user.id)
+                context["student"] = student
+            except Student.DoesNotExist:
+                pass
         else:
             context["student"] = None
 
         return render(request, "index.html", context)
-
-
-class AttendanceView(View):
-    def get(self, request):
-        return render(request, "attendance/list.html")
-
-class AttendanceListView(View):
-    def get(self, request):
-        return render(request, "attendance/att.html")
-
 
 
 class LoginView(View):

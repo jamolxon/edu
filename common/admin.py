@@ -12,6 +12,7 @@ class StudentAdmin(admin.ModelAdmin):
 
 admin.site.register(models.Group)
 admin.site.register(models.Teacher)
+admin.site.register(models.Attendance)
 
 
 

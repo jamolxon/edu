@@ -19,6 +19,11 @@ class RoleChoices(models.TextChoices):
     superuser = "superuser", _("Superuser")
 
 
+class DayChoices(models.TextChoices):
+    mwf = "mwf", _("Monday, Wednesday, Friday")
+    tts = "tts", _("Tuesday, Thursday, Saturday")
+
+
 class BaseUser(AbstractUser):
     full_name = models.CharField(_("full name"), max_length=256)
     username_validator = UnicodeUsernameValidator()
@@ -97,6 +102,7 @@ class Group(models.Model):
             null=True
             )
     description = models.TextField(_("description"), blank=True, null=True)
+    day_type = models.CharField(_("day type"), choices=DayChoices.choices, null=True)
     start_date = models.DateField(_("start date"))
     end_date = models.DateField(_("end date"))
     duration = models.IntegerField(_("duration"), default=12)
@@ -169,11 +175,10 @@ class Lesson(models.Model):
 
 
 class Attendance(models.Model):
-    lesson = models.ForeignKey(Lesson,on_delete=models.CASCADE, related_name="attendences", verbose_name=_("lesson"))
+    group = models.ForeignKey(Group, on_delete=models.SET_NULL, null=True, related_name="attendences", verbose_name=_("group"))
     student = models.ForeignKey(Student, on_delete=models.CASCADE, related_name="attendences", verbose_name=_("student"))
     attendance_date = models.DateField(_("attendence_date"))
     type = models.CharField(max_length=250, choices = [('present','Present'), ('absent','Absent')], verbose_name=_("attendence type"))
-
 
     class Meta:
         db_table = "attendance"
@@ -181,5 +186,5 @@ class Attendance(models.Model):
         verbose_name_plural = _("attendences")
 
     def __str__(self):
-        return f"{self.lesson.name}"
+        return f"{self.group.name}"
 

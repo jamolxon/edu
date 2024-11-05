@@ -37,7 +37,6 @@ class GroupStudentListView(ListView):
     def get_context_data(self,**kwargs):
         context = super().get_context_data(**kwargs)
         context['students'] =  Student.objects.filter(group_id=self.kwargs["group_id"])
-        print(context["students"])
         return context
 
 
