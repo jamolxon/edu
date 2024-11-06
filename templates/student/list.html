@@ -240,9 +240,9 @@
                                             <div class="d-flex mt-4 mt-sm-0">
                                                 <span class="font-weight-bold mr-4">Progress</span>
                                                 <div class="progress progress-xs mt-2 mb-2 flex-shrink-0 w-150px w-xl-250px">
-                                                    <div class="progress-bar bg-success" role="progressbar" style="width: 63%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                                                    <div class="progress-bar bg-success" role="progressbar" style="width: {{object.progress}}%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
                                                 </div>
-                                                <span class="font-weight-bolder text-dark ml-4">78%</span>
+                                                <span class="font-weight-bolder text-dark ml-4">{{object.progress}}%</span>
                                             </div>
                                             <!--end::Progress-->
                                         </div>
@@ -276,7 +276,7 @@
                                         <div class="d-flex flex-column text-dark-75">
                                             <span class="font-weight-bolder font-size-sm">Sarflangan</span>
                                             <span class="font-weight-bolder font-size-h5">
-                                                <span class="text-dark-50 font-weight-bold"><i class="flaticon-coins icon-md"></i></span> {{object.balance}}</span>
+                                                <span class="text-dark-50 font-weight-bold"><i class="flaticon-coins icon-md"></i></span> 0</span>
 
                                         </div>
                                     </div>
@@ -300,7 +300,7 @@
                                             <i class="flaticon-file-2 icon-2x text-muted font-weight-bold"></i>
                                         </span>
                                         <div class="d-flex flex-column flex-lg-fill">
-                                            <span class="text-dark-75 font-weight-bolder font-size-sm">Topshiriqlar soni: 73</span>
+                                            <span class="text-dark-75 font-weight-bolder font-size-sm">Topshiriqlar soni: {{object.task_count}}</span>
                                             <a href="#" class="text-primary font-weight-bolder">Ko'rish</a>
                                         </div>
                                     </div>
@@ -311,7 +311,7 @@
                                             <i class="flaticon-chat-1 icon-2x text-muted font-weight-bold"></i>
                                         </span>
                                         <div class="d-flex flex-column">
-                                            <span class="text-dark-75 font-weight-bolder font-size-sm">Bajarilgan topshiriqlar: 18</span>
+                                            <span class="text-dark-75 font-weight-bolder font-size-sm">Bajarilgan topshiriqlar: 0</span>
                                             <a href="#" class="text-primary font-weight-bolder">Ko'rish</a>
                                         </div>
                                     </div>

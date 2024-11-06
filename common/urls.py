@@ -9,5 +9,6 @@ urlpatterns = [
         path("mentor/", include("common.mentor.urls")),
         path("group/", include("common.group.urls")),
         path("attendance/", include("common.attendance.urls")),
+        path("task/", include("common.task.urls")),
 
         ]

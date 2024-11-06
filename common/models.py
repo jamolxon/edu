@@ -1,3 +1,4 @@
+import datetime
 from django.db import models
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
@@ -5,7 +6,10 @@ from django.core.validators import MinLengthValidator
 from django.conf import settings
 from django.contrib.auth.validators import UnicodeUsernameValidator
 from django.contrib.auth.models import AbstractUser
+from django.dispatch import receiver
+from django.db.models.signals import post_save
 
+from ckeditor_uploader.fields import RichTextUploadingField
 from django_resized import ResizedImageField
 
 from common.manager import UserManager
@@ -13,9 +17,9 @@ from common.manager import UserManager
 
 class RoleChoices(models.TextChoices):
     student = "student", _("Student")
-    parent = "parent", _("Parent")
+    # parent = "parent", _("Parent")
     teacher = "teacher", _("Teacher")
-    staff = "staff", _("Moderator")
+    # staff = "staff", _("Moderator")
     superuser = "superuser", _("Superuser")
 
 
@@ -149,6 +153,22 @@ class Student(models.Model):
     date_created = models.DateField(_("date created"), default=timezone.now)
     date_updated = models.DateTimeField(_("date updated"), auto_now=True)
 
+    @property
+    def task_count(self):
+        return self.group.lessons.count()
+
+    @property
+    def progress(self):
+        total_time = (self.group.end_date - self.group.start_date).total_seconds()
+        time_passed = (datetime.date.today() - self.group.start_date).total_seconds()
+
+        if total_time <= 0:
+            return 0
+
+        percentage_passed = (time_passed / total_time) * 100
+        return round(min(100, max(0, percentage_passed)), 1)
+
+
     class Meta:
         db_table = "student"
         verbose_name = _("student")
@@ -158,19 +178,19 @@ class Student(models.Model):
         return f"{self.first_name} {self.last_name}"
 
 
-class Lesson(models.Model):
-    name = models.CharField(_("name"), max_length=256)
+class Task(models.Model):
     group = models.ForeignKey(Group,on_delete=models.CASCADE, related_name="lessons", verbose_name=_("group"))
-    description = models.TextField(_("description"))
-    date = models.DateField(_("date"))
+    name = models.CharField(_("name"), max_length=256)
+    content = RichTextUploadingField(_("content"))
+    date = models.DateField(_("date"), default=timezone.now)
 
     class Meta:
-        db_table = "lesson"
-        verbose_name = _("lesson")
-        verbose_name_plural = _("lessons")
+        db_table = "task"
+        verbose_name = _("task")
+        verbose_name_plural = _("tasks")
 
     def __str__(self):
-        return f"{self.name} - {self.date}"
+        return f"{self.group} - {self.date}"
 
 
 
@@ -188,3 +208,12 @@ class Attendance(models.Model):
     def __str__(self):
         return f"{self.group.name}"
 
+
+@receiver(post_save, sender=Attendance)
+def give_coins(sender, instance, *args, **kwargs):
+    if instance.type == "absent":
+        instance.student.balance -= 1
+    else: 
+        instance.student.balance += 1
+
+    instance.student.save()

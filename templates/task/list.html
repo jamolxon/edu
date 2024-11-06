@@ -23,14 +23,14 @@
                         <div class="card card-custom gutter-b">
                             <div class="card-header flex-wrap py-3">
                                 <div class="card-title">
-                                    <h3 class="card-label"> Guruhlar 
-                                        <span class="d-block text-muted pt-2 font-size-sm">Barcha guruhlar</span></h3>
+                                    <h3 class="card-label"> Topshiriqlar 
+                                        <span class="d-block text-muted pt-2 font-size-sm">Barcha topshiriqlar</span></h3>
                                 </div>
 
                                 <div class="card-toolbar">
 
                                     <!--begin::Button-->
-                                    <a href="{% url 'group:group-create' %}" class="btn btn-primary font-weight-bolder">
+                                    <a href="{% url 'task:task-create' %}" class="btn btn-primary font-weight-bolder">
                                         <span class="svg-icon svg-icon-md">
                                             <!--begin::Svg Icon | path:assets/media/svg/icons/Design/Flatten.svg-->
                                             <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
@@ -68,26 +68,25 @@
                                 <table class="table">
                                     <thead>
                                         <tr>
-
                                             <th scope="col">Nomi</th>
+                                            <th scope="col">Guruh</th>
                                             <th scope="col">Amallar</th>
-
-
-
                                         </tr>
                                     </thead>
                                     <tbody>
                                         {% for object in page_obj %}
                                         <tr>
-                                            <th scope="row"> <a href="{% url 'attendance:attendance-list' %}?group_id={{object.pk}}">{{object.name|default_if_none:"-"|truncatewords:5}}</a> </th>
+                                            <th scope="row"> <a href="{% url 'task:task-detail' object.pk %}">{{object.name|default_if_none:"-"|truncatewords:5}}</a> </th>
+                                            <td scope="row">{{object.group.name|default_if_none:"-"}}</td>
+                                            <td scope="row">{{object.date|default_if_none:"-"}}</td>
                                             
                                             <td nowrap="nowrap">
 
-                                                <a href="{% url 'group:group-update'  object.pk %}"
+                                                <a href="{% url 'task:task-update' object.pk %}"
                                                     class="btn btn-sm btn-clean btn-icon" title="Таҳрирлаш"> <i
                                                         class="la la-edit"></i>
                                                 </a>
-                                                <a href="{% url 'group:group-delete' object.pk %}" data-toggle="modal" data-target="#deleteModal"
+                                                <a href="{% url 'task:task-delete' object.pk %}" data-toggle="modal" data-target="#deleteModal"
                                                     class="btn btn-sm btn-clean btn-icon removeButton" title="O'chirish"> <i
                                                         class="la la-trash"></i>
                                                 </a>
@@ -109,7 +108,7 @@
                                                                     class="btn btn-outline-secondary mb-3 mr-3"
                                                                     data-dismiss="modal">Orta qaytish
                                                                 </button>
-                                                                <a href="{% url 'group:group-delete' object.pk %}" id="modalDeleteButton">
+                                                                <a href="{% url 'task:task-delete' object.pk %}" id="modalDeleteButton">
                                                                     <button type="button" class="btn btn-danger mb-3">
                                                                         O'chirish
                                                                     </button>
@@ -287,3 +286,4 @@ i{
 {% block script %}
 <script src="{% static 'scripts.js' %}"></script>
 {% endblock %}
+
