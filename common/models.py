@@ -28,6 +28,11 @@ class DayChoices(models.TextChoices):
     tts = "tts", _("Tuesday, Thursday, Saturday")
 
 
+class HomeworkChoices(models.TextChoices):
+    done = "done", _("Done")
+    not_done = "not_done", _("Not done")
+
+
 class BaseUser(AbstractUser):
     full_name = models.CharField(_("full name"), max_length=256)
     username_validator = UnicodeUsernameValidator()
@@ -209,11 +214,41 @@ class Attendance(models.Model):
         return f"{self.group.name}"
 
 
+class Homework(models.Model):
+    group = models.ForeignKey(Group, on_delete=models.SET_NULL, null=True, related_name="homeworks", verbose_name=_("group"))
+    student = models.ForeignKey(Student, on_delete=models.CASCADE, related_name="homeworks", verbose_name=_("student"))
+    task = models.ForeignKey(Task, on_delete=models.SET_NULL, blank=True, null=True, related_name="homeworks", verbose_name=_("task"))
+    homework_date = models.DateField(_("homework date"))
+    type = models.CharField(max_length=250, choices=HomeworkChoices.choices, verbose_name=_("homework type"))
+
+    class Meta:
+        db_table = "homework"
+        verbose_name = _("homework")
+        verbose_name_plural = _("homework")
+
+    def __str__(self):
+        return f"{self.group.name}"
+
+
 @receiver(post_save, sender=Attendance)
-def give_coins(sender, instance, *args, **kwargs):
+def give_attendance_coins(sender, instance, *args, **kwargs):
     if instance.type == "absent":
         instance.student.balance -= 1
     else: 
         instance.student.balance += 1
 
     instance.student.save()
+
+
+@receiver(post_save, sender=Homework)
+def give_homework_coins(sender, instance, *args, **kwargs):
+    if instance.type == "not_done":
+        instance.student.balance -= 1
+    else: 
+        instance.student.balance += 1
+        task = Task.objects.filter(date=instance.homework_date).last()
+        if task:
+            Homework.objects.filter(id=instance.id).update(task_id=task.id)
+
+    instance.student.save()
+

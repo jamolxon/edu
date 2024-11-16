@@ -25,3 +25,25 @@ class AttendanceListSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Attendance
         fields = ("id", "student", "attendance_date", "type")
+
+
+class HomeworkListSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Homework
+        fields = ("id", "student", "homework_date", "type")
+
+
+class HomeworkSerializer(serializers.Serializer):
+    group = serializers.CharField()
+    student = serializers.CharField()
+    homework_date = serializers.DateField()
+    type = serializers.CharField()
+
+    def create(self, validated_data):
+        homework = models.Homework.objects.create(
+            group_id=validated_data["group"],
+            student_id=validated_data["student"],
+            homework_date=validated_data["homework_date"],
+            type=validated_data["type"],
+        )
+        return homework

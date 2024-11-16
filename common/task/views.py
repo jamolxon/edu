@@ -3,7 +3,7 @@ from django.views.generic import ListView, DetailView
 from django.contrib.auth.mixins import PermissionRequiredMixin
 
 from helpers.views import CreateView, DeleteView, UpdateView
-from common.models import Task
+from common.models import Task, Homework
 from common.task.forms import TaskForm
 
 
@@ -33,6 +33,11 @@ class StudentTaskListView(ListView):
 
     def get_queryset(self):
         return self.queryset.filter(group_id=self.request.user.students.first().group.id)
+
+    def get_context_data(self, **kwargs):
+        context = super(StudentTaskListView, self).get_context_data(**kwargs)
+        context['homework'] = Homework.objects.all()
+        return context
 
 
 

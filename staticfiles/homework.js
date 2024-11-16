@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', function () {
         .then(response => response.json())
         .then(groupData => {
             const { name, day_type } = groupData;
-            document.getElementById('group-name').textContent = `Attendance for ${name}`;
+            document.getElementById('group-name').textContent = `Homework for ${name}`;
 
             const yearSelect = document.getElementById('year');
             for (let i = 2024; i <= currentYear + 1; i++) {
@@ -107,13 +107,13 @@ document.addEventListener('DOMContentLoaded', function () {
                 const dayString = day.toDateString();
                 studentColumn += `
                     <td id="${student.student_id}-${month}-${dayString}">
-                    <div class="attendance-btn" style="max-width: 80px; height: 40px;">
+                        <div class="attendance-btn" style="max-width: 80px; height: 40px;">
                             <span></span>
                             <div class="options">
-                                <button onclick="markAttendance('${student.student_id}', '${student.fullName}', '${month}', '${dayString}', 'present')">
+                                <button onclick="markAttendance('${student.student_id}', '${student.fullName}', '${month}', '${dayString}', 'done')">
                                     <span class="icon">&#x2713;</span>
                                 </button>
-                                <button onclick="markAttendance('${student.student_id}', '${student.fullName}', '${month}', '${dayString}', 'absent')">
+                                <button onclick="markAttendance('${student.student_id}', '${student.fullName}', '${month}', '${dayString}', 'not_done')">
                                     <span class="icon">&#x2717;</span>
                                 </button>
                             </div>
@@ -161,20 +161,20 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function fetchAttendanceData() {
-        fetch(`/api/v1/group/${groupId}/attendance/`)
+        fetch(`/api/v1/group/${groupId}/homework/`)
             .then(response => response.json())
             .then(attendanceData => {
                 attendanceData.forEach(record => {
-                    const { student, attendance_date, type } = record;
-                    const dayString = new Date(attendance_date).toDateString();
-                    const monthIndex = new Date(attendance_date).getMonth();
+                    const { student, homework_date, type } = record;
+                    const dayString = new Date(homework_date).toDateString();
+                    const monthIndex = new Date(homework_date).getMonth();
                     const monthName = months[monthIndex];
                     
                     const cellId = `${student}-${monthName}-${dayString}`;
                     const cell = document.getElementById(cellId);
 
                     if (cell) {
-                        if (type === 'present'){
+                        if (type === 'done'){
                         //cell.innerHTML = `<span class="icon">&#x2713;</span>`;
                         cell.innerHTML = `<div class="attendance-btn" style="background: lightgreen;">
                             <span class="icon">&#x2713;</span>
@@ -188,7 +188,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 });
             })
             .catch(error => {
-                console.error('Error fetching attendance data:', error);
+                console.error('Error fetching homework data:', error);
             });
     }
 
@@ -205,12 +205,12 @@ document.addEventListener('DOMContentLoaded', function () {
             student_name: studentName,
             year,
             month,
-            attendance_date: formattedDate,
+            homework_date: formattedDate,
             type: status
         };
 
         const xhr = new XMLHttpRequest();
-        xhr.open('POST', '/api/v1/group/attendance/create/', true);
+        xhr.open('POST', '/api/v1/group/homework/create/', true);
         xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
         xhr.setRequestHeader('X-CSRFToken', csrfToken);  // Include CSRF token in header
         xhr.onreadystatechange = function () {
@@ -223,4 +223,3 @@ document.addEventListener('DOMContentLoaded', function () {
         return string.charAt(0).toUpperCase() + string.slice(1);
     }
 });
-

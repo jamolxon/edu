@@ -10,5 +10,6 @@ urlpatterns = [
         path("group/", include("common.group.urls")),
         path("attendance/", include("common.attendance.urls")),
         path("task/", include("common.task.urls")),
+        path("homework/", include("common.homework.urls")),
 
         ]
