@@ -84,19 +84,19 @@
                                                                             </th>
                                                                             <th style="min-width: 100px">Guruh nomi</th>
                                                                             <th style="min-width: 100px">Berilgan sanasi</th>
-                                                                            <th style="min-width: 130px">Topshiriq holati</th>
+                                                                            <th style="min-width: 130px">Topshiriq holati {{user.students.last.id}}</th>
                                                                             <th style="min-width: 120px"></th>
                                                                         </tr>
                                                                     </thead>
                                                                     <tbody>
                                                                         {% for object in objects %}
-                                                                            {% if object.homeworks.first.type == None %}
+                                                                            {% if  object.homeworks.last.type == None or object.homeworks.last.student.id != user.students.last.id %}
                                                                         <tr>
                                                                             <td class="pl-0 py-8">
                                                                                 <div class="d-flex align-items-center">
                                                                                     <div>
                                                                                         <a href="{% url 'task:task-detail' object.pk %}" class="text-dark-75 font-weight-bolder text-hover-primary mb-1 ml-7 font-size-lg">{{object.name}}</a>
-                                                                                        <span class="text-muted font-weight-bold d-block ml-7">HTML, JS, Python, etc.</span>
+                                                                                        <span class="text-muted font-weight-bold d-block ml-7">{{object.homeworks.all}}, JS, Python, etc.</span>
                                                                                     </div>
                                                                                 </div>
                                                                             </td>
